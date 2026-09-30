@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Đếm số lượng phần tử
+int Size(const list<int>& a) {
+    return a.size();
+}
+
+// 1. Thêm vào đầu danh sách: O(1)
+void insertFirst(list<int>& a, int x) {
+    a.push_front(x);
+}
+
+// 2. Thêm vào cuối danh sách: O(1)
+void insertLast(list<int>& a, int x) {
+    a.push_back(x);
+}
+
+// 3. Thêm vào giữa (vị trí k tính từ 1)
+void insertMiddle(list<int>& a, int x, int k) {
+    int n = a.size();
+    if (k <= 0 || k > n + 1) {
+        cout << "Vi tri khong hop le!\n";
+        return;
+    }
+    // Dịch iterator từ đầu đến vị trí k (vị trí k tính từ 1 tương ứng dịch k-1 bước)
+    auto it = a.begin();
+    advance(it, k - 1);
+    a.insert(it, x); // Chèn phần tử x ngay trước vị trí iterator đang trỏ
+}
+
+// 4. Xóa phần tử ở đầu: O(1)
+void deleteFirst(list<int>& a) {
+    if (a.empty()) return;
+    a.pop_front();
+}
+
+// 5. Xóa phần tử ở cuối: O(1)
+void deleteLast(list<int>& a) {
+    if (a.empty()) return;
+    a.pop_back();
+}
+
+// 6. Xóa ở giữa (vị trí k tính từ 1)
+void deleteMiddle(list<int>& a, int k) {
+    int n = a.size();
+    if (k <= 0 || k > n) {
+        return;
+    }
+    auto it = a.begin();
+    advance(it, k - 1);
+    a.erase(it); // Xóa node tại vị trí iterator và tự động nối lại các liên kết
+}
+
+// 7. Duyệt in xuôi
+void inXuoi(const list<int>& a) {
+    for (auto it = a.begin(); it != a.end(); it++) {
+        cout << *it << " ";
+    }
+    cout << endl;
+}
+
+// 8. Duyệt in ngược
+void inNguoc(const list<int>& a) {
+    for (auto it = a.rbegin(); it != a.rend(); it++) {
+        cout << *it << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    list<int> myList;
+
+    insertFirst(myList, 30);
+    insertFirst(myList, 10);
+    insertLast(myList, 50);
+    insertMiddle(myList, 20, 2); // 10 20 30 50
+    insertMiddle(myList, 40, 4); // 10 20 30 40 50
+
+    cout << "Danh sach in xuoi: ";
+    inXuoi(myList);
+
+    cout << "Danh sach in nguoc: ";
+    inNguoc(myList);
+
+    deleteMiddle(myList, 3); // Xóa số 30 ở vị trí thứ 3
+    cout << "Sau khi xoa vi tri 3: ";
+    inXuoi(myList);
+
+    insertLast(myList, 5);
+    insertFirst(myList, 99);
+    cout << "Truoc khi sap xep: ";
+    inXuoi(myList);
+
+    sapxep(myList);
+    cout << "Sau khi sap xep: ";
+    inXuoi(myList);
+
+    return 0;
+}
