@@ -1,100 +1,105 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-// Đếm số lượng phần tử
-int Size(const list<int>& a) {
-    return a.size();
+int arr[100];
+int n=0;
+
+void getIdArr(int index) {
+    cout << arr[index] << endl;
+}
+void insertLast(int x)
+{
+    arr[n] = x;
+    n++;
 }
 
-// 1. Thêm vào đầu danh sách: O(1)
-void insertFirst(list<int>& a, int x) {
-    a.push_front(x);
-}
-
-// 2. Thêm vào cuối danh sách: O(1)
-void insertLast(list<int>& a, int x) {
-    a.push_back(x);
-}
-
-// 3. Thêm vào giữa (vị trí k tính từ 1)
-void insertMiddle(list<int>& a, int x, int k) {
-    int n = a.size();
-    if (k <= 0 || k > n + 1) {
-        cout << "Vi tri khong hop le!\n";
-        return;
+void insertFirst(int x)
+{
+    for(int i=n; i>0; i--)
+    {
+        arr[i]=arr[i-1];
     }
-    // Dịch iterator từ đầu đến vị trí k (vị trí k tính từ 1 tương ứng dịch k-1 bước)
-    auto it = a.begin();
-    advance(it, k - 1);
-    a.insert(it, x); // Chèn phần tử x ngay trước vị trí iterator đang trỏ
+    arr[0]=x;
+    n++;
 }
-
-// 4. Xóa phần tử ở đầu: O(1)
-void deleteFirst(list<int>& a) {
-    if (a.empty()) return;
-    a.pop_front();
-}
-
-// 5. Xóa phần tử ở cuối: O(1)
-void deleteLast(list<int>& a) {
-    if (a.empty()) return;
-    a.pop_back();
-}
-
-// 6. Xóa ở giữa (vị trí k tính từ 1)
-void deleteMiddle(list<int>& a, int k) {
-    int n = a.size();
-    if (k <= 0 || k > n) {
-        return;
+void insertValue(int x, int index)
+{
+    for(int i=n;i>index;i--)
+    {
+        arr[i]=arr[i-1];
     }
-    auto it = a.begin();
-    advance(it, k - 1);
-    a.erase(it); // Xóa node tại vị trí iterator và tự động nối lại các liên kết
+    arr[index]=x;
+    n++;
 }
+void deleteFirst() 
+{
+    for (int i = 0; i < n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+    n--;
+}
+void deleteLast() 
+{
+    n--;
+}
+void deleteIdArr(int index) 
+{
+    for (int i = index; i < n - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
 
-// 7. Duyệt in xuôi
-void inXuoi(const list<int>& a) {
-    for (auto it = a.begin(); it != a.end(); it++) {
-        cout << *it << " ";
+    n--;
+}
+void printForward() 
+{
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
     }
     cout << endl;
 }
-
-// 8. Duyệt in ngược
-void inNguoc(const list<int>& a) {
-    for (auto it = a.rbegin(); it != a.rend(); it++) {
-        cout << *it << " ";
+void printReverse() 
+{
+    for (int i = n - 1; i >= 0; i--) {
+        cout << arr[i] << " ";
     }
     cout << endl;
 }
+int main()
+{
+    insertLast(10);
+    insertLast(20);
+    insertLast(30);
 
-int main() {
-    list<int> myList;
+    cout<<"In vi tri dau:"<<endl;
+    getIdArr(1);
+    cout<<"In xuôi mảng:"<<endl;
+    printForward();
 
-    insertFirst(myList, 30);
-    insertFirst(myList, 10);
-    insertLast(myList, 50);
-    insertMiddle(myList, 20, 2); // 10 20 30 50
-    insertMiddle(myList, 40, 4); // 10 20 30 40 50
+    cout<<"Chen 5 vao vi tri đầu:"<<endl;
 
-    cout << "Danh sach in xuoi: ";
-    inXuoi(myList);
+    insertFirst(5);
 
-    cout << "Danh sach in nguoc: ";
-    inNguoc(myList);
+    printForward();
+    cout<<"Chen 15 vao vi tri thu 3:"<<endl;
 
-    deleteMiddle(myList, 3); // Xóa số 30 ở vị trí thứ 3
-    cout << "Sau khi xoa vi tri 3: ";
-    inXuoi(myList);
+    insertValue(15, 2);
 
-    insertLast(myList, 5);
-    insertFirst(myList, 99);
-    cout << "Truoc khi sap xep: ";
-    inXuoi(myList);
+    printForward();
+    cout<<"Xoa vi tri dau:"<<endl;
+    deleteFirst();
 
-    sapxep(myList);
-    cout << "Sau khi sap xep: ";
-    inXuoi(myList);
+    printForward();
 
-    return 0;
+    cout<<"Xoa vi tri cuôi:"<<endl;
+    deleteLast();
+
+    printForward();
+    cout<<"Xoa vi tri thu 2:"<<endl;
+    deleteIdArr(1);
+
+    printForward();
+    cout<<"In nguoc mang"<<endl;
+    printReverse();
+
+   
 }
